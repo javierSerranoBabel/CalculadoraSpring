@@ -23,8 +23,8 @@ public class CalculadoraServiceImpl implements CalculadoraService {
     @Override
     public double dividir(double op1, double op2) {
         if(op2 == 0){
-            // TODO: devolver infinito
-            return 0;
+
+            return Double.POSITIVE_INFINITY;
         }
         else{
             return op1 / op2;

@@ -46,7 +46,7 @@ public class ConsoleReader {
                 System.out.println("Opción no valida");
             }
 
-            
+
             switch(opcion){
                 case 1:
                     try{

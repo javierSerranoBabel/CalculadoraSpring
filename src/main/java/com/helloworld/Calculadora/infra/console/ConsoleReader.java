@@ -12,6 +12,11 @@ import java.util.Scanner;
 @Component
 public class ConsoleReader {
     private CalculadoraService calculadoraService;
+    private double op1;
+    private double op2;
+    private String operando1String;
+    private String operando2String;
+    private  Scanner sc;
 
     public ConsoleReader(CalculadoraService calculadoraService){
         this.calculadoraService = calculadoraService;
@@ -19,13 +24,11 @@ public class ConsoleReader {
 
     @PostConstruct
     public void init(){
-        Scanner sc = new Scanner(System.in);
-        double op1;
-        double op2;
+        sc = new Scanner(System.in);
+
         int opcion = 1;
         String entradaConsola;
-        String operando1String;
-        String operando2String;
+
 
         while(opcion != 5){
             System.out.println("\nBienvenido a la calculadora, selecciona una operación");
@@ -43,89 +46,46 @@ public class ConsoleReader {
                 System.out.println("Opción no valida");
             }
 
-            // TODO: no repetir codigo
+            
             switch(opcion){
                 case 1:
-
-                    System.out.println("Ingrese el primer operando");
-                    operando1String = sc.next();
                     try{
-                        op1 = Double.parseDouble(operando1String);
-                        System.out.println("Ingrese el segundo operando");
-                        operando2String = sc.next();
-                        try{
-                            op2 = Double.parseDouble(operando2String);
-                            System.out.printf("Resultado: %f",calculadoraService.sumar(op1,op2));
-                        }
-                        catch(Exception e){
-                            System.out.println("Operando no válido");
-                        }
+                        getOperandos();
+                        System.out.printf("Resultado: %f",calculadoraService.sumar(op1,op2));
                     }
-                    catch(Exception e){
-                        System.out.println("Operando no válido");
+                    catch (Exception e){
+                        System.out.println("Volviendo al menu...");
                     }
+
+
+
+
                     break;
                 case 2:
-                    System.out.println("Ingrese el primer operando");
-                    operando1String = sc.next();
                     try{
-                        op1 = Double.parseDouble(operando1String);
-                        System.out.println("Ingrese el segundo operando");
-                        operando2String = sc.next();
-                        try{
-                            op2 = Double.parseDouble(operando2String);
-                            System.out.printf("Resultado: %f",calculadoraService.restar(op1,op2));
-                        }
-                        catch(Exception e){
-                            System.out.println("Operando no válido");
-                        }
+                        getOperandos();
+                        System.out.printf("Resultado: %f",calculadoraService.restar(op1,op2));
                     }
-                    catch(Exception e){
-                        System.out.println("Operando no válido");
+                    catch (Exception e){
+                        System.out.println("Volviendo al menu...");
                     }
                     break;
                 case 3:
-                    System.out.println("Ingrese el primer operando");
-                    operando1String = sc.next();
                     try{
-                        op1 = Double.parseDouble(operando1String);
-                        System.out.println("Ingrese el segundo operando");
-                        operando2String = sc.next();
-                        try{
-                            op2 = Double.parseDouble(operando2String);
-                            System.out.printf("Resultado: %f",calculadoraService.multiplicar(op1,op2));
-                        }
-                        catch(Exception e){
-                            System.out.println("Operando no válido");
-                        }
+                        getOperandos();
+                        System.out.printf("Resultado: %f",calculadoraService.multiplicar(op1,op2));
                     }
-                    catch(Exception e){
-                        System.out.println("Operando no válido");
+                    catch (Exception e){
+                        System.out.println("Volviendo al menu...");
                     }
                     break;
                 case 4:
-                    System.out.println("Ingrese el primer operando");
-                    operando1String = sc.next();
                     try{
-                        op1 = Double.parseDouble(operando1String);
-                        System.out.println("Ingrese el segundo operando");
-                        operando2String = sc.next();
-                        try{
-                            op2 = Double.parseDouble(operando2String);
-                            if(op2 == 0){
-                                System.out.println("El divisor no puede ser 0");
-                            }
-                            else{
-                                System.out.printf("Resultado: %f",calculadoraService.dividir(op1,op2));
-                            }
-
-                        }
-                        catch(Exception e){
-                            System.out.println("Operando no válido");
-                        }
+                        getOperandos();
+                        System.out.printf("Resultado: %f",calculadoraService.dividir(op1,op2));
                     }
-                    catch(Exception e){
-                        System.out.println("Operando no válido");
+                    catch (Exception e){
+                        System.out.println("Volviendo al menu...");
                     }
                     break;
                 case 5:
@@ -141,18 +101,26 @@ public class ConsoleReader {
         }
 
     }
-
-    private double comprobarSiNumero(String n){
-        double op = 0;
+    private void getOperandos (){
+        System.out.println("Ingrese el primer operando");
+        operando1String = sc.next();
         try{
-            op = Double.parseDouble(n);
-
+            op1 = Double.parseDouble(operando1String);
+            System.out.println("Ingrese el segundo operando");
+            operando2String = sc.next();
+            try{
+                op2 = Double.parseDouble(operando2String);
+            }
+            catch(Exception e){
+                System.out.println("Segundo Operando no válido");
+                throw e;
+            }
         }
         catch(Exception e){
-            System.out.println("Operando no válido");
-
-            System.exit(1);
+            System.out.println("Primer Operando no válido");
+            throw e;
         }
-        return op;
     }
+
+
 }
